@@ -16,4 +16,10 @@ int main(){
     std::cout << intruso.crack_senha() <<std::endl;
     
     return 0;
-}
+}   
+
+/*
+2
+1 7 3 9 0 8 5 6 2 4 B C E A E B
+9 0 7 5 8 4 6 2 3 1 E C C B D A
+*/
