@@ -30,56 +30,91 @@ void Intruso::set_senha_vazada(std::string vazou){
     CharIn.erase(CharIn.begin(),CharIn.end());
 }
 
-char Intruso::identificaSenha(){
-     std::vector<char>aux;
-    
-        for (int j = 0; j < VetorCharIn.size(); j++)
+void Intruso::identificaSenha(int posicao, std::vector<char> *aux){
+
+    std::vector<char>IntDia = VetorIntIn[posicao];
+    for (int i = 0; i < 6; i++)
+    {
+        switch (*(aux+i))
         {
-            aux = VetorCharIn[j];
-            if (aux[i*2] =='a' )
-            {
-                /* code */
-            }
-            
-            /* code */
-        }
-    
-    
+        case 'A':
+            SenhaDia.push_back(IntDia[0]);
+            SenhaDia.push_back(IntDia[1]);
+            break;
+        case 'B':
+            SenhaDia.push_back(IntDia[2]);
+            SenhaDia.push_back(IntDia[3]);
+            break;
+        case 'C':
+            SenhaDia.push_back(IntDia[4]);
+            SenhaDia.push_back(IntDia[5]);
+            break;
+        case 'D':
+            SenhaDia.push_back(IntDia[6]);
+            SenhaDia.push_back(IntDia[7]);
+            break;
+        case 'E':
+            SenhaDia.push_back(IntDia[8]);
+            SenhaDia.push_back(IntDia[9]);
+            break;
+        
+        default:
+            break;
+    }
+    SenhasPossiveis.push_back(SenhaDia);
+
+}
+
+void comparaSenha(){
     
 }
 
+
 std::string Intruso::crack_senha(){
-    for (int i = 0; i < 6; i++)
+    std::vector<char> *aux;
+
+    for (int i = 0; i < VetorCharIn.size(); i++)
     {
-        _senha.push_back(i);
+        aux = &VetorCharIn[i];
+        identificaSenha(i,aux);
+
     }
-   
-    switch ()
-    {
-    case 'A':
-        /* code */
-        break;
-    case 'B':
-        /* code */
-        break;
-    case 'C':
-        /* code */
-        break;
-    case 'D':
-        /* code */
-        break;
-    case 'E':
-        /* code */
-        break;
-    
-    default:
-        break;
-    }
-        
+            
     
 
 
     return _senha;
 }
-
-
+/* 
+    
+        for (int j = 0; j < VetorIntIn.size(); j++)
+        {
+            aux = VetorIntIn[j];
+            if (aux[posicao*2] =='a' )
+            {
+                
+            }
+            
+}*//*
+aux = VetorIntIn[i];
+        switch (aux)
+            {
+            case 'A':
+                identificaSenha(0);
+                break;
+            case 'B':
+                identificaSenha(1);
+                break;
+            case 'C':
+                identificaSenha(2);
+                break;
+            case 'D':
+                identificaSenha(3);
+                break;
+            case 'E':
+                identificaSenha(4);
+                break;
+            
+            default:
+                break;
+*/
