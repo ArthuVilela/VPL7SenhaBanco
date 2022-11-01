@@ -4,21 +4,24 @@
 #include <string>
 #include <vector>
 
+using namespace std;
 
-class Intruso{
-    /*Continue a implementação da classe Intruso*/
-    std::vector<std::vector<char>> VetorIntIn;
-    std::vector<std::vector<char>> VetorCharIn;
-    std::vector<char> IntIn;
-    std::vector<char> CharIn;
-    std::vector<std::vector<char>> SenhasPossiveis;
-    std::vector<char> SenhaDia;
-    std::string _senha;
 
-    public:
-        void set_senha_vazada(std::string vazou);
-        std::string crack_senha();
-        void identificaSenha(int posicao,std::vector<char> *aux);
-        void comparaSenha();
+class Intruso {
+    int numero_entradas;
+    vector<vector<char>> VetorIntIn;
+    vector<vector<char>> VetorCharIn;
+    vector<char> IntIn;
+    vector<char> CharIn;
+    vector<vector<char>> SenhasPossiveis;
+    vector<char> SenhaUsuario;
+    string _senha;
+
+public:
+    void set_senha_vazada(int num_entradas, string vazou);
+    vector<char> identificaNumerosDaPosicao(char letraSenha, vector<char>senha);
+    void identificaSenha();
+    void comparaSenha();
+    bool compare(vector<char> v1, vector<char> v2);
 };
 #endif

@@ -2,119 +2,160 @@
 #include <vector>
 #include "intruso.hpp"
 #include <iostream>
+#include <algorithm>
 
-//#define TAMANHO_SENHA 6;
+using namespace std;
 
-void Intruso::set_senha_vazada(std::string vazou){
-    for(char aux : vazou){
-        if((int)aux < 60 ){
+template <typename S>
+ostream& operator<<(ostream& os,
+    const vector<S>& vector)
+{
+    // Printing all the elements
+    // using <<
+    for (auto element : vector) {
+        os << element;
+    }
+    return os;
+}
+
+bool Intruso::compare(vector<char> v1, vector<char> v2)
+{
+    sort(v1.begin(), v1.end());
+    sort(v2.begin(), v2.end());
+    return v1 == v2;
+}
+
+void Intruso::set_senha_vazada(int num_entradas, string vazou) {
+    this->numero_entradas = num_entradas;
+
+    for (char aux : vazou) {
+        if ((int)aux < 60) {
             this->IntIn.push_back(aux);
-        }else{
+        }
+        else {
             this->CharIn.push_back(aux);
         }
 
     }
-    VetorIntIn.push_back(IntIn);
-    VetorCharIn.push_back(CharIn);
-    
-    for (char aux : IntIn)
-    {
-        std::cout<<aux<<" ";
-    }
-    for (char aux : CharIn)
-    {
-        std::cout<<aux<<" ";
-    }
-    
-    IntIn.erase(IntIn.begin(),IntIn.end());
-    CharIn.erase(CharIn.begin(),CharIn.end());
+
+
+
+    this->VetorIntIn.push_back(IntIn);
+    this->VetorCharIn.push_back(CharIn);
+
+
+
+
+    this->IntIn.erase(IntIn.begin(), IntIn.end());
+    this->CharIn.erase(CharIn.begin(), CharIn.end());
 }
 
-void Intruso::identificaSenha(int posicao, std::vector<char> *aux){
+vector<char> Intruso::identificaNumerosDaPosicao(char letraSenha, vector<char> senha) {
 
-    std::vector<char>IntDia = VetorIntIn[posicao];
-    for (int i = 0; i < 6; i++)
+
+
+    vector<char> numerosDaLetra;
+    switch (letraSenha)
     {
-        switch (*(aux+i))
-        {
-        case 'A':
-            SenhaDia.push_back(IntDia[0]);
-            SenhaDia.push_back(IntDia[1]);
-            break;
-        case 'B':
-            SenhaDia.push_back(IntDia[2]);
-            SenhaDia.push_back(IntDia[3]);
-            break;
-        case 'C':
-            SenhaDia.push_back(IntDia[4]);
-            SenhaDia.push_back(IntDia[5]);
-            break;
-        case 'D':
-            SenhaDia.push_back(IntDia[6]);
-            SenhaDia.push_back(IntDia[7]);
-            break;
-        case 'E':
-            SenhaDia.push_back(IntDia[8]);
-            SenhaDia.push_back(IntDia[9]);
-            break;
-        
-        default:
-            break;
+    case 'A':
+        numerosDaLetra.push_back(senha[0]);
+        numerosDaLetra.push_back(senha[2]);
+        break;
+    case 'B':
+
+        numerosDaLetra.push_back(senha[4]);
+        numerosDaLetra.push_back(senha[6]);
+        break;
+
+    case 'C':
+        numerosDaLetra.push_back(senha[8]);
+        numerosDaLetra.push_back(senha[10]);
+        break;
+    case 'D':
+        numerosDaLetra.push_back(senha[12]);
+        numerosDaLetra.push_back(senha[14]);
+        break;
+    case 'E':
+        numerosDaLetra.push_back(senha[16]);
+        numerosDaLetra.push_back(senha[18]);
+        break;
+
+    default:
+        break;
     }
-    SenhasPossiveis.push_back(SenhaDia);
 
+    return numerosDaLetra;
 }
 
-void comparaSenha(){
-    
-}
+void Intruso::identificaSenha() {
+    vector<char> senhaUsuario;
+    vector<char> segredoPrimeiraSenha;
+    vector<char> segredoSegundaSenha;
+    vector<char> primeiraSenha;
+    vector<char> segundaSenha;
+    vector<char> numerosDaLetraPrimeiraSenha;
+    vector<char> numerosDaLetraSegundaSenha;
+    int confereNumero;
+    char ultimoNumero;
+
+    for (int i = 0; i < 6; i++) {
+        confereNumero = 0;
+
+        for (int j = 0; j < this->numero_entradas - 1; j++) {
+
+            segredoPrimeiraSenha = this->VetorIntIn[j];
+            segredoSegundaSenha = this->VetorIntIn[j + 1];
+            primeiraSenha = this->VetorCharIn[j];
+            segundaSenha = this->VetorCharIn[j + 1];
 
 
-std::string Intruso::crack_senha(){
-    std::vector<char> *aux;
-
-    for (int i = 0; i < VetorCharIn.size(); i++)
-    {
-        aux = &VetorCharIn[i];
-        identificaSenha(i,aux);
-
-    }
-            
-    
 
 
-    return _senha;
-}
-/* 
-    
-        for (int j = 0; j < VetorIntIn.size(); j++)
-        {
-            aux = VetorIntIn[j];
-            if (aux[posicao*2] =='a' )
-            {
-                
+            numerosDaLetraPrimeiraSenha = identificaNumerosDaPosicao(primeiraSenha[i], segredoPrimeiraSenha);
+            numerosDaLetraSegundaSenha = identificaNumerosDaPosicao(segundaSenha[i], segredoSegundaSenha);
+
+
+
+            if (compare(numerosDaLetraPrimeiraSenha, numerosDaLetraSegundaSenha)) {
+                confereNumero++;
             }
-            
-}*//*
-aux = VetorIntIn[i];
-        switch (aux)
-            {
-            case 'A':
-                identificaSenha(0);
-                break;
-            case 'B':
-                identificaSenha(1);
-                break;
-            case 'C':
-                identificaSenha(2);
-                break;
-            case 'D':
-                identificaSenha(3);
-                break;
-            case 'E':
-                identificaSenha(4);
-                break;
-            
-            default:
-                break;
-*/
+            else {
+                for (int k = 0; k < 2; k++) {
+                    for (int l = 0; l < 2; l++) {
+
+                        if (numerosDaLetraPrimeiraSenha[k] == numerosDaLetraSegundaSenha[l]) {
+                            confereNumero++;
+                            ultimoNumero = numerosDaLetraPrimeiraSenha[k];
+                            if (confereNumero == (this->numero_entradas - 1)) {
+
+                                senhaUsuario.push_back(numerosDaLetraPrimeiraSenha[k]);
+                                confereNumero = 0;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            if (confereNumero == (this->numero_entradas - 1)) {
+                senhaUsuario.push_back(ultimoNumero);
+                confereNumero = 0;
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+        }
+    }
+    cout << senhaUsuario << endl;
+
+
+}
