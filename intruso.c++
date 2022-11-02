@@ -131,5 +131,7 @@ void Intruso::identificaSenha() {
             }
         }
     }
-    cout << senhaUsuario << endl;
+    for(char aux:senhaUsuario){
+        cout<<aux<<" ";
+    }
 }
