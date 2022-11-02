@@ -38,21 +38,14 @@ void Intruso::set_senha_vazada(int num_entradas, string vazou) {
 
     }
 
-
-
     this->VetorIntIn.push_back(IntIn);
     this->VetorCharIn.push_back(CharIn);
-
-
-
 
     this->IntIn.erase(IntIn.begin(), IntIn.end());
     this->CharIn.erase(CharIn.begin(), CharIn.end());
 }
 
 vector<char> Intruso::identificaNumerosDaPosicao(char letraSenha, vector<char> senha) {
-
-
 
     vector<char> numerosDaLetra;
     switch (letraSenha)
@@ -107,14 +100,9 @@ void Intruso::identificaSenha() {
             segredoSegundaSenha = this->VetorIntIn[j + 1];
             primeiraSenha = this->VetorCharIn[j];
             segundaSenha = this->VetorCharIn[j + 1];
-
-
-
-
+            
             numerosDaLetraPrimeiraSenha = identificaNumerosDaPosicao(primeiraSenha[i], segredoPrimeiraSenha);
             numerosDaLetraSegundaSenha = identificaNumerosDaPosicao(segundaSenha[i], segredoSegundaSenha);
-
-
 
             if (compare(numerosDaLetraPrimeiraSenha, numerosDaLetraSegundaSenha)) {
                 confereNumero++;
@@ -140,22 +128,8 @@ void Intruso::identificaSenha() {
             if (confereNumero == (this->numero_entradas - 1)) {
                 senhaUsuario.push_back(ultimoNumero);
                 confereNumero = 0;
-
-
-
             }
-
-
-
-
-
-
-
-
-
         }
     }
     cout << senhaUsuario << endl;
-
-
 }
